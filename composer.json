@@ -1,8 +1,8 @@
 {
     "name": "xxrougexx/Telegram_Bot",
     "autoload": {
-        "psr-0" : {
-            "xxrougexx\\Telegram_Bot" : "src"
-        }
+        "files" : [
+			"src/lib.php"
+		]
     }
 }

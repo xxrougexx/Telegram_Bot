@@ -152,7 +152,7 @@ namespace Telegram{
 			$private_uuid = curl_getinfo($handle, CURLINFO_PRIVATE);
 			if($private_uuid !== false) {
 				$this->private_data = $curl_requests_private_data[$private_uuid];
-				if($private_data !== null) {
+				if($this->private_data !== null) {
 					// Close file handle
 					if($private_data['file_handle']) {
 						fclose($private_data['file_handle']);
@@ -161,7 +161,7 @@ namespace Telegram{
 					unset($this->curl_requests_private_data[$private_uuid]);
 				}
 			}
-			*/
+			
 
 			curl_close($handle);
 

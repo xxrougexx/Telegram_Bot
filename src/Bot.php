@@ -204,7 +204,7 @@ namespace Telegram{
 		}
 		function send_location($chat_id, $latitude, $longitude, $parameters = null) {
 			if(!is_numeric($latitude) || !is_numeric($longitude)) {
-				\Telegram\Logger:error('Latitude and longitude must be numbers', __FILE__);
+				\Telegram\Logger::error('Latitude and longitude must be numbers', __FILE__);
 				return false;
 			}
 

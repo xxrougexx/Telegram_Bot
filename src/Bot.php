@@ -2,6 +2,9 @@
 namespace Telegram{
 	class Bot{
 		private $token;
+		
+		private $curl_requests_private_data = array();
+		
 		public function __construct($token){
 			$this->token=$token;
 		}
@@ -75,7 +78,6 @@ namespace Telegram{
 			return $handle;
 		}
 		private function prepare_curl_download_request($url, $output_path) {
-			//global $curl_requests_private_data;
 
 			// Parameter checking
 			if(!is_string($url)) {
@@ -101,11 +103,11 @@ namespace Telegram{
 			curl_setopt($handle, CURLOPT_USERAGENT, 'Telegram Bot client, UWiClab (https://github.com/UWiClab/TelegramBotSample)');
 
 			// Store private data
-			/*$uuid = uniqid();
+			$uuid = uniqid();
 			curl_setopt($handle, CURLOPT_PRIVATE, $uuid);
-			$curl_requests_private_data[$uuid] = array(
+			$this->curl_requests_private_data[$uuid] = array(
 				'file_handle' => $file_handle
-			);*/
+			);
 
 			return $handle;
 		}
@@ -147,16 +149,16 @@ namespace Telegram{
 			$http_code = intval(curl_getinfo($handle, CURLINFO_HTTP_CODE));
 
 			// Handle private data associated to the request
-			/*$private_uuid = curl_getinfo($handle, CURLINFO_PRIVATE);
+			$private_uuid = curl_getinfo($handle, CURLINFO_PRIVATE);
 			if($private_uuid !== false) {
-				$private_data = $curl_requests_private_data[$private_uuid];
+				$this->private_data = $curl_requests_private_data[$private_uuid];
 				if($private_data !== null) {
 					// Close file handle
 					if($private_data['file_handle']) {
 						fclose($private_data['file_handle']);
 					}
 
-					unset($curl_requests_private_data[$private_uuid]);
+					unset($this->curl_requests_private_data[$private_uuid]);
 				}
 			}
 			*/

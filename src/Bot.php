@@ -239,6 +239,22 @@ namespace Telegram{
 
 			return $this->perform_telegram_request($handle);
 		}
+		function send_document($chat_id,$document_id,$caption,$parameters = null) {
+			if(!$document_id) {
+				\Telegram\Logger::error('Path to attached document must be set', __FILE__);
+				return false;
+			}
+			$is_remote =(stripos($document_id, 'http') === 0) || !file_exists($document_id);
+			$parameters = $this->prepare_parameters($parameters, array(
+				'chat_id' => $chat_id,
+				'caption' => $caption
+			));
+			$handle = $this->prepare_curl_api_request( 'https://api.telegram.org/bot'.$this->token. '/sendDocument', 'POST', $parameters, array(
+				'document' => ($is_remote) ? $document_id : new \CURLFile($document_id)
+				));
+			
+			return $this->perform_telegram_request($handle);
+		}
 		function telegram_send_chat_action($chat_id, $action = 'typing') {
 			$parameters = array(
 				'chat_id' => $chat_id,

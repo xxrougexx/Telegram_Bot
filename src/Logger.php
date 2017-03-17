@@ -1,12 +1,4 @@
 <?php
-/**
- * Telegram Bot Sample
- * ===================
- * UWiClab, University of Urbino
- * ===================
- * Support library. Don't change a thing here.
- */
-
 class Logger {
 
     const SEVERITY_DEBUG = 1;
@@ -20,7 +12,7 @@ class Logger {
 
     public static function info($message, $tag = '') {
         self::common(self::SEVERITY_INFO, $message, $tag);
-    }
+    }    
 
     public static function warning($message, $tag = '') {
         self::common(self::SEVERITY_WARNING, $message, $tag);
@@ -48,7 +40,7 @@ class Logger {
     }
 
     private static function common($level, $message, $tag = '') {
-        if(is_cli()) {
+        if(self::is_cli()) {
             // In CLI mode, output all logs to stderr
             fwrite(STDERR, self::severity_to_char($level) . '/' . $message . PHP_EOL);
         }
@@ -57,5 +49,9 @@ class Logger {
             error_log(self::severity_to_char($level) . ':' . $tag . ':' . $message);
         }
     }
+	private static function is_cli() {
+		return (php_sapi_name() === 'cli');
+	}
 
 }
+?>
